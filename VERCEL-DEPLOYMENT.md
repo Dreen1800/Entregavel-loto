@@ -31,7 +31,7 @@ WEBHOOK_SECRET=your_webhook_secret_key
 
 # Next.js Configuration  
 NEXTAUTH_SECRET=your_nextauth_secret
-NEXTAUTH_URL=https://your-domain.vercel.app
+NEXTAUTH_URL=https://loto.rewardsmoneyclub.com
 
 # Environment
 NODE_ENV=production
@@ -91,14 +91,14 @@ O projeto possui as seguintes rotas de API prontas para produção:
 
 ### Webhook Hotmart
 ```bash
-curl -X POST https://seu-domain.vercel.app/api/webhook/hotmart \
+curl -X POST https://loto.rewardsmoneyclub.com/api/webhook/hotmart \
   -H "Content-Type: application/json" \
   -d '{"test": true}'
 ```
 
 ### Webhook Users
 ```bash
-curl -X POST https://seu-domain.vercel.app/api/webhook/users \
+curl -X POST https://loto.rewardsmoneyclub.com/api/webhook/users \
   -H "Content-Type: application/json" \
   -H "x-webhook-secret: your_secret" \
   -d '{"email": "test@example.com", "name": "Test User", "action": "create"}'

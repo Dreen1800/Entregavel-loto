@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://your-domain.vercel.app
+Host: https://loto.rewardsmoneyclub.com
 
 # Sitemaps
-Sitemap: https://your-domain.vercel.app/sitemap.xml
+Sitemap: https://loto.rewardsmoneyclub.com/sitemap.xml
