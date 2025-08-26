@@ -1,44 +1,30 @@
 {
   "functions": {
     "app/api/webhook/hotmart/route.ts": {
-      "maxDuration": 30
+      "maxDuration": 30,
+      "memory": 1024
     },
     "app/api/webhook/lotogains/route.ts": {
-      "maxDuration": 30
+      "maxDuration": 30,
+      "memory": 1024
     },
     "app/api/webhook/lototurbo/route.ts": {
-      "maxDuration": 30
+      "maxDuration": 30,
+      "memory": 1024
     },
     "app/api/webhook/users/route.ts": {
-      "maxDuration": 30
+      "maxDuration": 30,
+      "memory": 1024
     }
   },
-  "routes": [
-    {
-      "src": "/api/webhook/hotmart",
-      "dest": "/api/webhook/hotmart"
-    },
-    {
-      "src": "/api/webhook/lotogains",
-      "dest": "/api/webhook/lotogains"
-    },
-    {
-      "src": "/api/webhook/lototurbo",
-      "dest": "/api/webhook/lototurbo"
-    },
-    {
-      "src": "/api/webhook/users",
-      "dest": "/api/webhook/users"
-    }
-  ],
   "headers": [
     {
-      "source": "/api/(.*)",
+      "source": "/api/webhook/(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
         { "key": "Access-Control-Allow-Origin", "value": "*" },
         { "key": "Access-Control-Allow-Methods", "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT" },
-        { "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" }
+        { "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization, x-webhook-secret" }
       ]
     }
   ]
