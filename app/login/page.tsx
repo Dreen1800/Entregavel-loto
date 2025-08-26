@@ -28,12 +28,12 @@ export default function LoginPage() {
     e.preventDefault()
     
     if (!email) {
-      alert('Por favor, digite seu email')
+      alert('Veuillez saisir votre email')
       return
     }
 
     if (isNewUser && !name.trim()) {
-      alert('Por favor, digite seu nome')
+      alert('Veuillez saisir votre nom')
       return
     }
 
@@ -43,13 +43,13 @@ export default function LoginPage() {
       const { data, error, user: userData } = await signInWithEmail(email, name)
       
       if (error) {
-        alert(`Erro: ${error.message}`)
+        alert(`Erreur: ${error.message}`)
       } else if (userData) {
         refreshUser()
         router.push('/')
       }
     } catch (error: any) {
-      alert('Ocorreu um erro inesperado')
+      alert('Une erreur inattendue s\'est produite')
     } finally {
       setLoading(false)
     }
@@ -68,8 +68,8 @@ export default function LoginPage() {
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b">
         <div className="flex items-center justify-between p-4">
           <div>
-            <h1 className="text-2xl font-bold text-primary">Acesso</h1>
-            <p className="text-sm text-muted-foreground">Digite seu email para entrar</p>
+            <h1 className="text-2xl font-bold text-primary">Accès</h1>
+            <p className="text-sm text-muted-foreground">Saisissez votre email pour vous connecter</p>
           </div>
         </div>
       </header>
@@ -80,10 +80,10 @@ export default function LoginPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <User className="h-5 w-5" />
-                Login Direto
+                Connexion Directe
               </CardTitle>
               <CardDescription>
-                Entre diretamente com seu email
+                Connectez-vous directement avec votre email
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -95,7 +95,7 @@ export default function LoginPage() {
                     <Input
                       id="email"
                       type="email"
-                      placeholder="seu@email.com"
+                      placeholder="votre@email.com"
                       className="pl-10"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -113,19 +113,19 @@ export default function LoginPage() {
                     className="rounded"
                   />
                   <Label htmlFor="newUser" className="text-sm">
-                    Sou novo usuário
+                    Je suis un nouvel utilisateur
                   </Label>
                 </div>
 
                 {isNewUser && (
                   <div className="space-y-2">
-                    <Label htmlFor="name">Nome</Label>
+                    <Label htmlFor="name">Nom</Label>
                     <div className="relative">
                       <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <Input
                         id="name"
                         type="text"
-                        placeholder="Seu nome completo"
+                        placeholder="Votre nom complet"
                         className="pl-10"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
@@ -139,12 +139,12 @@ export default function LoginPage() {
                   {loading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Entrando...
+                      Connexion...
                     </>
                   ) : (
                     <>
                       <LogIn className="mr-2 h-4 w-4" />
-                      Entrar
+                      Se connecter
                     </>
                   )}
                 </Button>
@@ -152,7 +152,7 @@ export default function LoginPage() {
               
               <div className="mt-6 text-center">
                 <p className="text-sm text-muted-foreground">
-                  Sem senha necessária! Entre diretamente com seu email
+                  Aucun mot de passe requis ! Connectez-vous directement avec votre email
                 </p>
               </div>
             </CardContent>

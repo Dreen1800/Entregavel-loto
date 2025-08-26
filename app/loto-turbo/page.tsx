@@ -108,8 +108,8 @@ function ActivationCode({ visible, code }: { visible: boolean; code: string }) {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch (err) {
-      console.error('Falha ao copiar código:', err)
-      // Fallback para navegadores mais antigos
+      console.error('Échec de la copie du code:', err)
+      // Solution de repli pour les navigateurs plus anciens
       const textArea = document.createElement('textarea')
       textArea.value = code
       document.body.appendChild(textArea)

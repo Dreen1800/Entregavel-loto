@@ -25,12 +25,12 @@ export function AuthModal({ children }: AuthModalProps) {
     e.preventDefault()
     
     if (!email) {
-      alert('Por favor, digite seu email')
+      alert('Veuillez saisir votre email')
       return
     }
 
     if (isNewUser && !name.trim()) {
-      alert('Por favor, digite seu nome')
+      alert('Veuillez saisir votre nom')
       return
     }
 
@@ -40,14 +40,14 @@ export function AuthModal({ children }: AuthModalProps) {
       const { data, error, user: userData } = await signInWithEmail(email, name)
       
       if (error) {
-        alert(`Erro: ${error.message}`)
+        alert(`Erreur: ${error.message}`)
       } else if (userData) {
         refreshUser()
         setOpen(false)
         resetModal()
       }
     } catch (error: any) {
-      alert('Ocorreu um erro inesperado')
+      alert('Une erreur inattendue  s est produite')
     } finally {
       setLoading(false)
     }
@@ -72,7 +72,7 @@ export function AuthModal({ children }: AuthModalProps) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Acesso Direto</DialogTitle>
+          <DialogTitle>Accès Direct</DialogTitle>
         </DialogHeader>
         
         <form onSubmit={handleLogin} className="space-y-4 p-4">
@@ -83,7 +83,7 @@ export function AuthModal({ children }: AuthModalProps) {
               <Input
                 id="modal-email"
                 type="email"
-                placeholder="seu@email.com"
+                placeholder="votre@email.com"
                 className="pl-10"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -101,19 +101,19 @@ export function AuthModal({ children }: AuthModalProps) {
               className="rounded"
             />
             <Label htmlFor="modal-newUser" className="text-sm">
-              Sou novo usuário
+              Je suis un nouvel utilisateur
             </Label>
           </div>
 
           {isNewUser && (
             <div className="space-y-2">
-              <Label htmlFor="modal-name">Nome</Label>
+              <Label htmlFor="modal-name">Nom</Label>
               <div className="relative">
                 <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
                   id="modal-name"
                   type="text"
-                  placeholder="Seu nome completo"
+                  placeholder="Votre nom complet"
                   className="pl-10"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -127,18 +127,18 @@ export function AuthModal({ children }: AuthModalProps) {
             {loading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Entrando...
+                Connexion...
               </>
             ) : (
               <>
                 <LogIn className="mr-2 h-4 w-4" />
-                Entrar
+                Se connecter
               </>
             )}
           </Button>
           
           <p className="text-xs text-center text-muted-foreground">
-            Sem senha necessária! Entre diretamente
+            Aucun mot de passe requis ! Connectez-vous directement
           </p>
         </form>
       </DialogContent>

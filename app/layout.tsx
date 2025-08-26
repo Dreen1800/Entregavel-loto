@@ -7,8 +7,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: "LotoGains - Lottery & Gaming App",
-  description: "Modern lottery and gaming experience with LotoGains",
+  title: "LotoGains - Application de Loterie et Jeux",
+  description: "Expérience moderne de loterie et de jeux avec LotoGains",
   generator: "v0.app",
 }
 
@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="fr" suppressHydrationWarning>
       <head>
         <style>{`
 html {

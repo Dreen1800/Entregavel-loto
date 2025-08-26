@@ -14,10 +14,10 @@ import { useEffect, useState } from "react"
 export default function HomePage() {
   const router = useRouter()
   const { user, isAuthenticated, refreshUserFromDB } = useAuth()
-  // Refresh automático ao carregar a página
+  // Actualisation automatique lors du chargement de la page
   useEffect(() => {
     if (isAuthenticated && user?.email) {
-      console.log('🔄 Fazendo refresh automático dos dados do usuário...')
+      console.log('🔄 Actualisation automatique des données utilisateur...')
       refreshUserFromDB()
     }
   }, [isAuthenticated, user?.email])
@@ -26,16 +26,16 @@ export default function HomePage() {
     console.log('🎯 handlePremiumAccess chamado:', { productPath, hasAccess, productType })
     
     if (!isAuthenticated) {
-      // Se não está logado, mostrar modal de login
+      // Si pas connecté, afficher le modal de connexion
       return
     }
     
     if (hasAccess) {
-      // Se tem acesso, navegar para o produto
+      // Si accès disponible, naviguer vers le produit
       router.push(productPath)
     } else {
-      // Se não tem acesso, redirecionar para compra
-      console.log('🛒 Redirecionando para compra...')
+      // Si pas d'accès, rediriger vers l'achat
+      console.log('🛒 Redirection vers l\'achat...')
       
       const purchaseLinks = {
         'lotogains': 'https://pay.hotmart.com/Q101524388K',
@@ -59,8 +59,8 @@ export default function HomePage() {
           window.location.href = url
         }
       } else {
-        // Fallback para alert se não conseguir identificar o produto
-        alert('Este produto está bloqueado. Entre em contato para liberar o acesso premium.')
+        // Solution de repli si impossible d'identifier le produit
+        alert('Ce produit est bloqué. Contactez-nous pour débloquer l\'accès premium.')
       }
     }
   }
@@ -152,7 +152,7 @@ export default function HomePage() {
                     ) : (
                       <>
                         <Lock className="mr-2 h-4 w-4" />
-                        Produto Bloqueado
+                        Produit Bloqué
                       </>
                     )}
                   </Button>
@@ -211,7 +211,7 @@ export default function HomePage() {
                     ) : (
                       <>
                         <Lock className="mr-2 h-4 w-4" />
-                        Produto Bloqueado
+                        Produit Bloqué
                       </>
                     )}
                   </Button>

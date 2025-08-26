@@ -35,20 +35,20 @@ const Header = React.forwardRef<HTMLElement, HeaderProps>(
         if (error) {
           toast({
             variant: "destructive",
-            title: "Erro",
+            title: "Erreur",
             description: error.message,
           })
         } else {
           toast({
-            title: "Logout realizado!",
-            description: "Você foi desconectado com sucesso",
+            title: "Déconnexion réalisée!",
+            description: "Vous avez été déconnecté avec succès",
           })
         }
       } catch (error) {
         toast({
           variant: "destructive",
           title: "Erro",
-          description: "Ocorreu um erro inesperado",
+          description: "Une erreur inattendue s'est produite",
         })
       }
     }
@@ -91,17 +91,17 @@ const Header = React.forwardRef<HTMLElement, HeaderProps>(
                   variant="ghost" 
                   size="icon"
                   onClick={handleSignOut}
-                  title="Sair"
+                  title="Sortir"
                 >
                   <LogOut className="h-5 w-5" />
-                  <span className="sr-only">Sair</span>
+                  <span className="sr-only">Sortir</span>
                 </Button>
               </div>
             ) : !loading ? (
               <AuthModal>
-                <Button variant="ghost" size="icon" title="Entrar">
+                <Button variant="ghost" size="icon" title="Connexion">
                   <User className="h-5 w-5" />
-                  <span className="sr-only">Entrar</span>
+                  <span className="sr-only">Connexion</span>
                 </Button>
               </AuthModal>
             ) : null}

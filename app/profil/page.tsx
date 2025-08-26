@@ -27,13 +27,13 @@ export default function ProfilPage() {
       refreshUser()
       router.push('/')
     } catch (error) {
-      console.error('Erro ao desconectar:', error)
+      console.error('Erreur lors de la déconnexion:', error)
     }
   }
 
   const handleChangePhoto = () => {
-    console.log("Alterando foto...")
-    // Lógica para alterar foto do perfil
+    console.log("Modification de la photo...")
+    // Logique pour modifier la photo de profil
   }
 
   if (loading) {
@@ -63,7 +63,7 @@ export default function ProfilPage() {
       <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="flex h-16 items-center justify-between px-4">
           <div className="flex items-center space-x-2">
-            <h1 className="text-xl font-bold">Seu Perfil</h1>
+            <h1 className="text-xl font-bold">Votre Profil</h1>
           </div>
           <Button 
             variant="ghost" 
@@ -72,7 +72,7 @@ export default function ProfilPage() {
             className="text-red-600 hover:text-red-700 hover:bg-red-50"
           >
             <LogOut className="h-4 w-4 mr-2" />
-            Sair
+            Sortir
           </Button>
         </div>
       </header>
@@ -86,7 +86,7 @@ export default function ProfilPage() {
             <div className="flex flex-col items-center mb-8">
               <div className="relative">
                 <Avatar className="h-24 w-24 mb-4">
-                  <AvatarImage src="/placeholder-user.jpg" alt="Foto de perfil" />
+                  <AvatarImage src="/placeholder-user.jpg" alt="Photo de profil" />
                   <AvatarFallback className="text-2xl bg-primary text-primary-foreground">
                     {getInitials(user.name)}
                   </AvatarFallback>
@@ -102,7 +102,7 @@ export default function ProfilPage() {
               </div>
               
               <p className="text-sm text-muted-foreground text-center max-w-xs">
-                Clique no ícone da câmera para alterar sua foto
+                Cliquez sur l'icône de l'appareil photo pour modifier votre photo
               </p>
             </div>
 
@@ -112,7 +112,7 @@ export default function ProfilPage() {
               <div className="space-y-2">
                 <label className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                   <User className="h-4 w-4" />
-                  Nome
+                  Nom
                 </label>
                 <div className="bg-muted/50 rounded-lg p-3">
                   <span className="text-lg font-medium">{user.name}</span>
@@ -133,11 +133,11 @@ export default function ProfilPage() {
               {/* Data de Cadastro */}
               <div className="space-y-2">
                 <label className="text-sm font-medium text-muted-foreground">
-                  Membro desde
+                  Membre depuis
                 </label>
                 <div className="bg-muted/50 rounded-lg p-3">
                   <span className="text-lg font-medium">
-                    {new Date(user.created_at).toLocaleDateString('pt-BR')}
+                    {new Date(user.created_at).toLocaleDateString('fr-FR')}
                   </span>
                 </div>
               </div>
@@ -150,10 +150,10 @@ export default function ProfilPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Shield className="h-5 w-5" />
-              Acesso Premium
+              Accès Premium
             </CardTitle>
             <CardDescription>
-              Status dos seus produtos premium
+              Statut de vos produits premium
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -170,11 +170,11 @@ export default function ProfilPage() {
                   </div>
                   <div>
                     <p className="font-medium">LotoGains 10X</p>
-                    <p className="text-sm text-muted-foreground">Gerador IA Premium</p>
+                    <p className="text-sm text-muted-foreground">Générateur IA Premium</p>
                   </div>
                 </div>
                 <Badge variant={user.loto_gains_10x_access ? "default" : "secondary"}>
-                  {user.loto_gains_10x_access ? "Liberado" : "Bloqueado"}
+                  {user.loto_gains_10x_access ? "Débloqué" : "Bloqué"}
                 </Badge>
               </div>
 
@@ -190,18 +190,18 @@ export default function ProfilPage() {
                   </div>
                   <div>
                     <p className="font-medium">LotoTurbo</p>
-                    <p className="text-sm text-muted-foreground">Resultados Rápidos</p>
+                    <p className="text-sm text-muted-foreground">Résultats Rapides</p>
                   </div>
                 </div>
                 <Badge variant={user.loto_turbo_access ? "default" : "secondary"}>
-                  {user.loto_turbo_access ? "Liberado" : "Bloqueado"}
+                  {user.loto_turbo_access ? "Débloqué" : "Bloqué"}
                 </Badge>
               </div>
 
               {(!user.loto_gains_10x_access || !user.loto_turbo_access) && (
                 <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
                   <p className="text-sm text-blue-800">
-                    💎 Entre em contato para liberar acesso aos produtos premium
+                    💎 Contactez-nous pour débloquer l'accès aux produits premium
                   </p>
                 </div>
               )}

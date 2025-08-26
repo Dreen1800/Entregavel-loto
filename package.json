@@ -1,6 +1,7 @@
 {
-  "name": "my-v0-project",
+  "name": "lotogains-app",
   "version": "0.1.0",
+  "description": "Application moderne de loterie et de jeux avec LotoGains",
   "private": true,
   "scripts": {
     "build": "next build",
