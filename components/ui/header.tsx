@@ -2,9 +2,13 @@
 
 import * as React from "react"
 import { Button } from "@/components/ui/button"
-import { Moon, Sun, ArrowLeft } from "lucide-react"
+import { AuthModal } from "@/components/ui/auth-modal"
+import { Moon, Sun, ArrowLeft, User, LogOut } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useRouter, usePathname } from "next/navigation"
+import { useAuth } from "@/hooks/use-auth"
+import { signOut } from "@/lib/auth"
+import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
@@ -17,11 +21,37 @@ interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
 const Header = React.forwardRef<HTMLElement, HeaderProps>(
   ({ className, title = "LotoGains", subtitle = "Votre chance commence ici", showThemeToggle = true, showBackButton, ...props }, ref) => {
     const { theme, setTheme } = useTheme()
+    const { user, loading } = useAuth()
+    const { toast } = useToast()
     const router = useRouter()
     const pathname = usePathname()
     
     // Determinar se deve mostrar o botão de volta automaticamente
     const shouldShowBackButton = showBackButton !== undefined ? showBackButton : pathname !== "/"
+
+    const handleSignOut = async () => {
+      try {
+        const { error } = await signOut()
+        if (error) {
+          toast({
+            variant: "destructive",
+            title: "Erro",
+            description: error.message,
+          })
+        } else {
+          toast({
+            title: "Logout realizado!",
+            description: "Você foi desconectado com sucesso",
+          })
+        }
+      } catch (error) {
+        toast({
+          variant: "destructive",
+          title: "Erro",
+          description: "Ocorreu um erro inesperado",
+        })
+      }
+    }
 
     return (
       <header
@@ -50,17 +80,44 @@ const Header = React.forwardRef<HTMLElement, HeaderProps>(
               {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
             </div>
           </div>
-          {showThemeToggle && (
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            >
-              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">Basculer le thème</span>
-            </Button>
-          )}
+          
+          <div className="flex items-center gap-2">
+            {!loading && user ? (
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground hidden sm:inline">
+                  {user.email}
+                </span>
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  onClick={handleSignOut}
+                  title="Sair"
+                >
+                  <LogOut className="h-5 w-5" />
+                  <span className="sr-only">Sair</span>
+                </Button>
+              </div>
+            ) : !loading ? (
+              <AuthModal>
+                <Button variant="ghost" size="icon" title="Entrar">
+                  <User className="h-5 w-5" />
+                  <span className="sr-only">Entrar</span>
+                </Button>
+              </AuthModal>
+            ) : null}
+            
+            {showThemeToggle && (
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              >
+                <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Basculer le thème</span>
+              </Button>
+            )}
+          </div>
         </div>
       </header>
     )

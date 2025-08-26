@@ -7,9 +7,10 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Bolt, Globe, MapPin, Ticket, Sparkles, Zap, ExternalLink, MapPinIcon } from 'lucide-react'
+import { Bolt, Globe, MapPin, Ticket, Sparkles, Zap, ExternalLink, MapPinIcon, Lock, ShoppingCart } from 'lucide-react'
 import { Particles } from '@/components/lotogains-10x/particles'
 import { Confetti } from '@/components/lotogains-10x/confetti'
+import { usePremiumAccess } from '@/hooks/use-premium-access'
 
 // Dados das loteries e países (adaptado do HTML original)
 const locationData = {
@@ -128,6 +129,7 @@ interface LotteryBall {
 }
 
 export default function LotoGains10XPage() {
+  const { hasLotoGains10x, user, loading, redirectToPurchase } = usePremiumAccess()
   const [selectedCountry, setSelectedCountry] = useState<string>('')
   const [selectedCity, setSelectedCity] = useState<string>('')
   const [selectedLottery, setSelectedLottery] = useState<any>(null)
@@ -205,6 +207,140 @@ export default function LotoGains10XPage() {
   }
 
   const canGenerate = selectedCountry && selectedCity && selectedLottery
+
+  // Componente de bloqueio para usuários sem acesso
+  const PremiumBlockedContent = () => {
+    console.log('🎭 Renderizando PremiumBlockedContent')
+    return (
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      <Particles />
+      <Header 
+        title="LotoGains 10X" 
+        subtitle="Générateur de Numéros Gagnants Potentialisé" 
+      />
+      
+      <main className="container mx-auto px-4 py-6 pb-20 relative z-10">
+        <Card className="max-w-2xl mx-auto bg-gradient-to-r from-accent/10 to-primary/10 border-accent/30">
+          <CardContent className="p-8 text-center">
+            <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-accent/10 flex items-center justify-center">
+              <Lock className="w-12 h-12 text-accent" />
+            </div>
+            
+            <h2 className="text-3xl font-bold text-accent mb-4">Acesso Premium Necessário</h2>
+            
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              <strong>DEBUG:</strong> Esta é a tela de bloqueio. Se você está vendo isto, o componente está funcionando.
+              <br />
+              <strong>Usuário:</strong> {user?.email || 'Não logado'}
+              <br />
+              <strong>LotoGains 10X:</strong> {user?.loto_gains_10x_access ? 'true' : 'false'}
+              <br />
+              <strong>LotoTurbo:</strong> {user?.loto_turbo_access ? 'true' : 'false'}
+            </div>
+            
+            <p className="text-lg text-muted-foreground mb-6">
+              O LotoGains 10X é uma ferramenta premium exclusiva. Para acessar o gerador de números 
+              com precisão 10X superior, você precisa adquirir o acesso completo.
+            </p>
+
+            <div className="space-y-4 mb-8">
+              <div className="flex items-center justify-center text-accent">
+                <Sparkles className="w-5 h-5 mr-2" />
+                <span>Algoritmos IA avançados</span>
+              </div>
+              <div className="flex items-center justify-center text-accent">
+                <Bolt className="w-5 h-5 mr-2" />
+                <span>Precisão 10X superior</span>
+              </div>
+              <div className="flex items-center justify-center text-accent">
+                <Zap className="w-5 h-5 mr-2" />
+                <span>Suporte a todas as loterias</span>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <button
+                onClick={(e) => {
+                  alert('Botão clicado! Vou abrir o link...')
+                  window.location.href = 'https://pay.hotmart.com/Q101524388K'
+                }}
+                className="bg-red-500 text-white text-lg px-8 py-4 rounded-xl font-bold w-full cursor-pointer"
+                style={{ border: 'none', outline: 'none' }}
+              >
+                🚨 TESTE - Clique Aqui (LotoGains 10X)
+              </button>
+
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  console.log('🛒 Botão clicado - LotoGains 10X')
+                  console.log('🔗 Redirecionando para: https://pay.hotmart.com/Q101524388K')
+                  
+                  // Tentar múltiplas formas de redirecionamento
+                  try {
+                    const url = 'https://pay.hotmart.com/Q101524388K'
+                    console.log('Tentando window.open...')
+                    const newWindow = window.open(url, '_blank')
+                    
+                    if (!newWindow) {
+                      console.log('window.open falhou, tentando location.href...')
+                      window.location.href = url
+                    } else {
+                      console.log('window.open funcionou!')
+                    }
+                  } catch (error) {
+                    console.error('Erro:', error)
+                    window.location.href = 'https://pay.hotmart.com/Q101524388K'
+                  }
+                }}
+                className="bg-accent text-accent-foreground hover:bg-accent/90 text-lg px-8 py-4 rounded-xl font-bold transform transition-all hover:scale-105 flex items-center justify-center cursor-pointer w-full"
+                style={{ border: 'none', outline: 'none' }}
+              >
+                <ShoppingCart className="w-5 h-5 mr-2" />
+                Adquirir LotoGains 10X
+              </button>
+            </div>
+
+            <p className="text-sm text-muted-foreground mt-4">
+              {user ? `Logado como: ${user.email}` : 'Faça login para verificar seu acesso'}
+            </p>
+          </CardContent>
+        </Card>
+      </main>
+      
+      <BottomNavigation />
+    </div>
+  )}  // Fechamento da função PremiumBlockedContent
+
+  // Debug: sempre mostrar no console
+  console.log('🔍 Estado atual:', {
+    loading,
+    hasLotoGains10x,
+    user: user?.email,
+    loto_gains_10x_access: user?.loto_gains_10x_access
+  })
+
+  // Mostrar loading
+  if (loading) {
+    console.log('⏳ Mostrando tela de loading')
+    return (
+      <div className="min-h-screen bg-background relative overflow-hidden flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Verificando acesso...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Mostrar bloqueio se não tem acesso
+  if (!hasLotoGains10x) {
+    console.log('🚫 Mostrando tela de bloqueio - usuário sem acesso')
+    return <PremiumBlockedContent />
+  }
+
+  console.log('✅ Mostrando conteúdo completo - usuário tem acesso')
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">

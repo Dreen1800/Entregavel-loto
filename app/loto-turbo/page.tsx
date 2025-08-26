@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Header } from "@/components/ui/header"
 import { PageLayout } from "@/components/layout/page-layout"
-import { Bolt, ChartLine, Rocket, Key, Cog, RotateCcw, Star, Copy, Check } from "lucide-react"
+import { Bolt, ChartLine, Rocket, Key, Cog, RotateCcw, Star, Copy, Check, Lock, ShoppingCart, Sparkles, Zap } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { usePremiumAccess } from '@/hooks/use-premium-access'
 
 // Componente de partículas douradas usando classes do globals.css
 function GoldenParticles() {
@@ -172,6 +173,7 @@ function ActivationCode({ visible, code }: { visible: boolean; code: string }) {
 }
 
 export default function LotoTurboPage() {
+  const { hasLotoTurbo, user, loading, redirectToPurchase } = usePremiumAccess()
   const [isLoading, setIsLoading] = useState(false)
   const [showCode, setShowCode] = useState(false)
   const [activationCode, setActivationCode] = useState("71777")
@@ -213,6 +215,106 @@ export default function LotoTurboPage() {
         }
       }, 100)
     }, 3000)
+  }
+
+  // Componente de bloqueio para usuários sem acesso
+  const PremiumBlockedContent = () => (
+    <PageLayout>
+      <GoldenParticles />
+      
+      <div className="relative z-10">
+        <Header 
+          title="LotoTurbo"
+          subtitle="Activez le mode turbo pour multiplier vos chances de gain"
+        />
+
+        <div className="max-w-2xl mx-auto p-6 relative z-20">
+          <Card className="bg-gradient-to-r from-accent/10 to-primary/10 border-accent/30">
+            <CardContent className="p-8 text-center">
+              <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-accent/10 flex items-center justify-center">
+                <Lock className="w-12 h-12 text-accent" />
+              </div>
+              
+              <h2 className="text-3xl font-bold text-accent mb-4">Acesso Premium Necessário</h2>
+              
+              <p className="text-lg text-muted-foreground mb-6">
+                O LotoTurbo é uma ferramenta premium que potencializa suas chances com códigos 
+                de ativação exclusivos. Adquira o acesso para desbloquear o modo turbo.
+              </p>
+
+              <div className="space-y-4 mb-8">
+                <div className="flex items-center justify-center text-accent">
+                  <Bolt className="w-5 h-5 mr-2" />
+                  <span>Precisão 10X superior</span>
+                </div>
+                <div className="flex items-center justify-center text-accent">
+                  <ChartLine className="w-5 h-5 mr-2" />
+                  <span>+78% de chances de ganhar</span>
+                </div>
+                <div className="flex items-center justify-center text-accent">
+                  <Rocket className="w-5 h-5 mr-2" />
+                  <span>Geração instantânea</span>
+                </div>
+              </div>
+
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  console.log('🛒 Botão clicado - LotoTurbo')
+                  console.log('🔗 Redirecionando para: https://pay.hotmart.com/R101540125D?off=lhy6d68y')
+                  
+                  // Tentar múltiplas formas de redirecionamento
+                  try {
+                    const url = 'https://pay.hotmart.com/R101540125D?off=lhy6d68y'
+                    console.log('Tentando window.open...')
+                    const newWindow = window.open(url, '_blank')
+                    
+                    if (!newWindow) {
+                      console.log('window.open falhou, tentando location.href...')
+                      window.location.href = url
+                    } else {
+                      console.log('window.open funcionou!')
+                    }
+                  } catch (error) {
+                    console.error('Erro:', error)
+                    window.location.href = 'https://pay.hotmart.com/R101540125D?off=lhy6d68y'
+                  }
+                }}
+                className="bg-accent text-accent-foreground hover:bg-accent/90 text-lg px-8 py-4 rounded-xl font-bold transform transition-all hover:scale-105 flex items-center justify-center cursor-pointer"
+                style={{ border: 'none', outline: 'none' }}
+              >
+                <ShoppingCart className="w-5 h-5 mr-2" />
+                Adquirir LotoTurbo
+              </button>
+
+              <p className="text-sm text-muted-foreground mt-4">
+                {user ? `Logado como: ${user.email}` : 'Faça login para verificar seu acesso'}
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </PageLayout>
+  )
+
+  // Mostrar loading
+  if (loading) {
+    return (
+      <PageLayout>
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent mx-auto mb-4"></div>
+            <p className="text-muted-foreground">Verificando acesso...</p>
+          </div>
+        </div>
+      </PageLayout>
+    )
+  }
+
+  // Mostrar bloqueio se não tem acesso
+  if (!hasLotoTurbo) {
+    return <PremiumBlockedContent />
   }
 
   return (

@@ -5,15 +5,71 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Header } from "@/components/ui/header"
 import { BottomNavigation } from "@/components/ui/bottom-navigation"
+import { AuthModal } from "@/components/ui/auth-modal"
 import { useRouter } from "next/navigation"
+import { useAuth } from "@/hooks/use-auth"
+import { Lock } from "lucide-react"
+import { useEffect, useState } from "react"
 
 export default function HomePage() {
   const router = useRouter()
+  const { user, isAuthenticated, refreshUserFromDB } = useAuth()
+  // Refresh automático ao carregar a página
+  useEffect(() => {
+    if (isAuthenticated && user?.email) {
+      console.log('🔄 Fazendo refresh automático dos dados do usuário...')
+      refreshUserFromDB()
+    }
+  }, [isAuthenticated, user?.email])
+
+  const handlePremiumAccess = (productPath: string, hasAccess: boolean, productType?: 'lotogains' | 'lototurbo') => {
+    console.log('🎯 handlePremiumAccess chamado:', { productPath, hasAccess, productType })
+    
+    if (!isAuthenticated) {
+      // Se não está logado, mostrar modal de login
+      return
+    }
+    
+    if (hasAccess) {
+      // Se tem acesso, navegar para o produto
+      router.push(productPath)
+    } else {
+      // Se não tem acesso, redirecionar para compra
+      console.log('🛒 Redirecionando para compra...')
+      
+      const purchaseLinks = {
+        'lotogains': 'https://pay.hotmart.com/Q101524388K',
+        'lototurbo': 'https://pay.hotmart.com/R101540125D?off=lhy6d68y'
+      }
+      
+      if (productType && purchaseLinks[productType]) {
+        const url = purchaseLinks[productType]
+        console.log('🔗 URL de compra:', url)
+        
+        try {
+          const newWindow = window.open(url, '_blank')
+          if (!newWindow) {
+            console.log('⚠️ Popup bloqueado, usando location.href')
+            window.location.href = url
+          } else {
+            console.log('✅ Nova aba aberta com sucesso')
+          }
+        } catch (error) {
+          console.error('❌ Erro ao redirecionar:', error)
+          window.location.href = url
+        }
+      } else {
+        // Fallback para alert se não conseguir identificar o produto
+        alert('Este produto está bloqueado. Entre em contato para liberar o acesso premium.')
+      }
+    }
+  }
 
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
       <Header showBackButton={false} />
+
 
       {/* Main Content */}
       <main className="pb-20 px-4">
@@ -70,12 +126,38 @@ export default function HomePage() {
                 ⚡ Générateur de numéros alimenté par une IA ultra-puissante. 
                 Mode Turbo disponible pour 10X plus de précision et 78% de chances de gagner en plus !
               </CardDescription>
-              <Button 
-                className="w-full bg-gradient-to-r from-accent to-primary text-white hover:from-accent/90 hover:to-primary/90 transition-all duration-300"
-                onClick={() => router.push("/lotogains-10x")}
-              >
-                🎯 Essayer Maintenant
-              </Button>
+              {!isAuthenticated ? (
+                <AuthModal>
+                  <Button className="w-full bg-gradient-to-r from-accent to-primary text-white hover:from-accent/90 hover:to-primary/90 transition-all duration-300">
+                    🎯 Essayer Maintenant
+                  </Button>
+                </AuthModal>
+              ) : (
+                <div className="relative">
+                  <Button 
+                    className={`w-full bg-gradient-to-r transition-all duration-300 ${
+                      user?.loto_gains_10x_access 
+                        ? 'from-accent to-primary text-white hover:from-accent/90 hover:to-primary/90' 
+                        : 'from-gray-400 to-gray-500 text-gray-200 cursor-pointer hover:from-gray-500 hover:to-gray-600'
+                    }`}
+                    onClick={(e) => {
+                      console.log('🛒 Botão LotoGains 10X clicado!')
+                      console.log('👤 Usuário:', user?.email)
+                      console.log('🔐 Acesso LotoGains:', user?.loto_gains_10x_access)
+                      handlePremiumAccess("/lotogains-10x", user?.loto_gains_10x_access || false, 'lotogains')
+                    }}
+                  >
+                    {user?.loto_gains_10x_access ? (
+                      <>🎯 Essayer Maintenant</>
+                    ) : (
+                      <>
+                        <Lock className="mr-2 h-4 w-4" />
+                        Produto Bloqueado
+                      </>
+                    )}
+                  </Button>
+                </div>
+              )}
             </CardContent>
           </Card>
         </section>
@@ -103,12 +185,38 @@ export default function HomePage() {
                 🚀 Résultats ultra-rapides toutes les 5 minutes ! 
                 Système de génération instantanée avec technologie avancée pour une agilité maximale !
               </CardDescription>
-              <Button 
-                className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600 transition-all duration-300"
-                onClick={() => router.push("/loto-turbo")}
-              >
-                ⚡ Jouer Turbo
-              </Button>
+              {!isAuthenticated ? (
+                <AuthModal>
+                  <Button className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600 transition-all duration-300">
+                    ⚡ Jouer Turbo
+                  </Button>
+                </AuthModal>
+              ) : (
+                <div className="relative">
+                  <Button 
+                    className={`w-full bg-gradient-to-r transition-all duration-300 ${
+                      user?.loto_turbo_access 
+                        ? 'from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600' 
+                        : 'from-gray-400 to-gray-500 text-gray-200 cursor-pointer hover:from-gray-500 hover:to-gray-600'
+                    }`}
+                    onClick={(e) => {
+                      console.log('🛒 Botão LotoTurbo clicado!')
+                      console.log('👤 Usuário:', user?.email)
+                      console.log('🔐 Acesso LotoTurbo:', user?.loto_turbo_access)
+                      handlePremiumAccess("/loto-turbo", user?.loto_turbo_access || false, 'lototurbo')
+                    }}
+                  >
+                    {user?.loto_turbo_access ? (
+                      <>⚡ Jouer Turbo</>
+                    ) : (
+                      <>
+                        <Lock className="mr-2 h-4 w-4" />
+                        Produto Bloqueado
+                      </>
+                    )}
+                  </Button>
+                </div>
+              )}
             </CardContent>
           </Card>
         </section>
