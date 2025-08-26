@@ -1,0 +1,705 @@
+@bonus03.html
+Mises à jour quotidiennes (bônus 3):
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LotoGains — Mises à jour quotidiennes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-green: #00C853;
+            --dark-green: #009624;
+            --gold: #FFD700;
+            --dark-gold: #FFC400;
+            --white: #FFFFFF;
+            --black: #121212;
+            --light-gray: #f8f9fa;
+            --dark-gray: #6c757d;
+            --card-bg: #FFFFFF;
+            --border-color: #dee2e6;
+        }
+
+        .dark-mode {
+            --background: #1a1a1a;
+            --text: #f8f9fa;
+            --card-bg: #2d2d2d;
+            --border-color: #444;
+            --light-gray: #2d2d2d;
+            --dark-gray: #b1b1b1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-gray);
+            color: var(--black);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+            padding-bottom: 2rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 4px solid var(--gold);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-green);
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.4;
+        }
+
+        .highlight-box {
+            background-color: rgba(255, 215, 0, 0.2);
+            border-left: 4px solid var(--gold);
+            padding: 1rem;
+            margin: 1rem auto;
+            max-width: 800px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            font-weight: 600;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: 50px;
+            transition: all 0.15s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 0.8rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: var(--card-bg);
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-item {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid var(--primary-green);
+        }
+
+        .info-title {
+            font-weight: 700;
+            color: var(--dark-green);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        .info-extra {
+            font-size: 0.85rem;
+            color: var(--dark-gray);
+            margin-top: 0.3rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.3em 0.6em;
+            font-size: 75%;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 50px;
+        }
+
+        .badge-warning {
+            color: var(--black);
+            background-color: var(--gold);
+        }
+
+        .badge-success {
+            color: white;
+            background-color: var(--primary-green);
+        }
+
+        .badge-danger {
+            color: white;
+            background-color: #ff4757;
+        }
+
+        .update-banner {
+            background-color: var(--gold);
+            color: var(--black);
+            padding: 0.8rem;
+            text-align: center;
+            margin-bottom: 1.2rem;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .news-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-title {
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+            font-size: 1.1rem;
+        }
+
+        .news-meta {
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+            margin-bottom: 0.5rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .news-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .tag {
+            background-color: rgba(0, 200, 83, 0.2);
+            color: var(--primary-green);
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .countdown {
+            font-weight: bold;
+            color: var(--dark-green);
+        }
+
+        .jackpot-high {
+            font-weight: bold;
+            color: #ff4757;
+        }
+
+        .instructions {
+            margin: 1.5rem 0;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .instructions ol {
+            margin-left: 1.2rem;
+        }
+
+        .instructions li {
+            margin-bottom: 0.8rem;
+            line-height: 1.5;
+        }
+
+        .disclaimer {
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+            font-style: italic;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background-color: rgba(108, 117, 125, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .section-icon {
+            font-size: 1.5rem;
+            color: var(--primary-green);
+        }
+
+        .lottery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .lottery-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s;
+        }
+
+        .lottery-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .lottery-name {
+            font-weight: 700;
+            color: var(--dark-green);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .lottery-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .lottery-detail {
+            font-size: 0.9rem;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        @media (max-width: 768px) {
+            .filters {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.7rem;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .lottery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        .simple-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .simple-table th {
+            background-color: var(--primary-green);
+            color: white;
+            text-align: left;
+            padding: 0.7rem;
+        }
+        
+        .simple-table td {
+            padding: 0.7rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .simple-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>LotoGains — Mises à jour quotidiennes</h1>
+            <p class="subtitle">Toutes les informations dont vous avez besoin pour vos jeux de loterie préférés, mises à jour quotidiennement et présentées simplement.</p>
+            <button id="refreshBtn" class="btn"><i class="fas fa-sync-alt"></i> Actualiser maintenant</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="highlight-box">
+            <p><i class="fas fa-star"></i> Votre chance de rester à jour et de repérer les meilleures opportunités commence ici.</p>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-title"><i class="fas fa-calendar-day"></i> Prochain tirage</div>
+                <div class="info-value">EuroMillions</div>
+                <div class="info-extra">Vendredi 20:30 • <span class="badge badge-warning">Dans 2 jours</span></div>
+            </div>
+            <div class="info-item">
+                <div class="info-title"><i class="fas fa-trophy"></i> Plus gros jackpot</div>
+                <div class="info-value">130 000 000 €</div>
+                <div class="info-extra">Powerball • <span class="badge badge-danger">🔥 Record</span></div>
+            </div>
+            <div class="info-item">
+                <div class="info-title"><i class="fas fa-chart-line"></i> Meilleure opportunité</div>
+                <div class="info-value">Loto Français</div>
+                <div class="info-extra">Rapport de chances favorable • <span class="badge badge-success">Recommandé</span></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-filter"></i> Filtres simples</h2>
+            </div>
+            <div class="filters">
+                <div class="form-group">
+                    <label for="countryFilter">Pays</label>
+                    <select id="countryFilter">
+                        <option value="">Tous les pays</option>
+                        <option value="France">France</option>
+                        <option value="Europe">Europe</option>
+                        <option value="États-Unis">États-Unis</option>
+                        <option value="Espagne">Espagne</option>
+                        <option value="Italie">Italie</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="lotteryFilter">Loterie</label>
+                    <select id="lotteryFilter">
+                        <option value="">Toutes les loteries</option>
+                        <option value="EuroMillions">EuroMillions</option>
+                        <option value="Powerball">Powerball</option>
+                        <option value="Loto">Loto Français</option>
+                        <option value="Mega Millions">Mega Millions</option>
+                        <option value="SuperEnalotto">SuperEnalotto</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="jackpotFilter">Jackpot min (€)</label>
+                    <input type="number" id="jackpotFilter" min="0" placeholder="Ex: 10000000">
+                </div>
+            </div>
+            <button id="filterBtn" class="btn"><i class="fas fa-check"></i> Appliquer les filtres</button>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-clock"></i> Prochains tirages importants</h2>
+            </div>
+            <div class="lottery-grid">
+                <div class="lottery-card">
+                    <div class="lottery-name">EuroMillions</div>
+                    <div class="countdown"><i class="fas fa-bolt"></i> Dans 2 jours</div>
+                    <div class="lottery-details">
+                        <div class="lottery-detail"><span class="detail-label">Date:</span> 15/12/2023</div>
+                        <div class="lottery-detail"><span class="detail-label">Heure:</span> 20:30</div>
+                        <div class="lottery-detail"><span class="detail-label">Jackpot:</span> 85M€</div>
+                        <div class="lottery-detail"><span class="detail-label">Pays:</span> Europe</div>
+                    </div>
+                </div>
+                <div class="lottery-card">
+                    <div class="lottery-name">Powerball</div>
+                    <div class="countdown"><i class="fas fa-bolt"></i> Demain</div>
+                    <div class="lottery-details">
+                        <div class="lottery-detail"><span class="detail-label">Date:</span> 14/12/2023</div>
+                        <div class="lottery-detail"><span class="detail-label">Heure:</span> 04:00</div>
+                        <div class="lottery-detail"><span class="detail-label">Jackpot:</span> 130M€</div>
+                        <div class="lottery-detail"><span class="detail-label">Pays:</span> États-Unis</div>
+                    </div>
+                </div>
+                <div class="lottery-card">
+                    <div class="lottery-name">Loto Français</div>
+                    <div class="countdown"><i class="fas fa-bolt"></i> Aujourd'hui</div>
+                    <div class="lottery-details">
+                        <div class="lottery-detail"><span class="detail-label">Date:</span> 13/12/2023</div>
+                        <div class="lottery-detail"><span class="detail-label">Heure:</span> 20:30</div>
+                        <div class="lottery-detail"><span class="detail-label">Jackpot:</span> 5M€</div>
+                        <div class="lottery-detail"><span class="detail-label">Pays:</span> France</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-coins"></i> Jackpots les plus importants</h2>
+            </div>
+            <table class="simple-table">
+                <thead>
+                    <tr>
+                        <th>Loterie</th>
+                        <th>Jackpot</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Powerball</td>
+                        <td class="jackpot-high">130 000 000 €</td>
+                        <td><span class="badge badge-danger">🔥 Élevé</span></td>
+                    </tr>
+                    <tr>
+                        <td>EuroMillions</td>
+                        <td class="jackpot-high">85 000 000 €</td>
+                        <td><span class="badge badge-danger">🔥 Élevé</span></td>
+                    </tr>
+                    <tr>
+                        <td>Mega Millions</td>
+                        <td>65 000 000 €</td>
+                        <td><span class="badge badge-warning">Moyen</span></td>
+                    </tr>
+                    <tr>
+                        <td>SuperEnalotto</td>
+                        <td>45 000 000 €</td>
+                        <td><span class="badge badge-warning">Moyen</span></td>
+                    </tr>
+                    <tr>
+                        <td>Loto Français</td>
+                        <td>5 000 000 €</td>
+                        <td><span class="badge badge-success">Faible</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-fire"></i> Actus chaudes</h2>
+            </div>
+            <div class="news-item">
+                <div class="news-title">Record historique pour le jackpot Powerball !</div>
+                <div class="news-meta">
+                    <span><i class="fas fa-newspaper"></i> LotoActualités</span>
+                    <span><i class="fas fa-clock"></i> Il y a 2 heures</span>
+                </div>
+                <div class="news-tags">
+                    <span class="tag">Powerball</span>
+                    <span class="tag">Record</span>
+                    <span class="tag">Jackpot</span>
+                </div>
+            </div>
+            <div class="news-item">
+                <div class="news-title">Un gagnant chanceux empoche 50 millions au Loto Français</div>
+                <div class="news-meta">
+                    <span><i class="fas fa-newspaper"></i> France Loto Info</span>
+                    <span><i class="fas fa-clock"></i> Hier</span>
+                </div>
+                <div class="news-tags">
+                    <span class="tag">Loto</span>
+                    <span class="tag">France</span>
+                    <span class="tag">Gagnant</span>
+                </div>
+            </div>
+            <div class="news-item">
+                <div class="news-title">Strategies gagnantes pour l'EuroMillions</div>
+                <div class="news-meta">
+                    <span><i class="fas fa-newspaper"></i> Jeux de Hasard Magazine</span>
+                    <span><i class="fas fa-clock"></i> Il y a 3 jours</span>
+                </div>
+                <div class="news-tags">
+                    <span class="tag">EuroMillions</span>
+                    <span class="tag">Stratégie</span>
+                    <span class="tag">Conseils</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h2><i class="fas fa-info-circle"></i> Comment utiliser ce tableau de bord</h2>
+            <ol>
+                <li><strong>Vérifiez les prochains tirages</strong> - Consultez la section "Prochains tirages" pour ne manquer aucune date importante.</li>
+                <li><strong>Surveillez les jackpots</strong> - La section "Jackpots" vous montre les gains les plus élevés du moment.</li>
+                <li><strong>Lisez les actualités</strong> - Restez informé avec les dernières nouvelles dans "Actus chaudes".</li>
+                <li><strong>Utilisez les filtres</strong> - Affinez les résultats par pays ou type de loterie si nécessaire.</li>
+                <li><strong>Actualisez régulièrement</strong> - Cliquez sur "Actualiser maintenant" pour avoir les informations les plus récentes.</li>
+            </ol>
+            <p style="margin-top: 1rem; font-weight: 600; color: var(--primary-green);">C'est aussi simple que cela ! Aucune connaissance technique n'est requise.</p>
+        </div>
+
+        <div class="disclaimer">
+            <p><i class="fas fa-exclamation-circle"></i> Les données présentées ici sont à titre informatif uniquement. Nous ne garantissons pas leur exactitude à 100%. Veuillez toujours vérifier les informations auprès des sources officielles avant de participer à tout jeu de loterie.</p>
+        </div>
+    </div>
+
+    <button id="darkModeToggle" class="btn dark-mode-toggle"><i class="fas fa-moon"></i></button>
+
+    <script>
+        // Fonctionnalités simplifiées
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mode sombre/clair
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                if (document.body.classList.contains('dark-mode')) {
+                    darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                } else {
+                    darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                }
+            });
+
+            // Bouton d'actualisation
+            const refreshBtn = document.getElementById('refreshBtn');
+            refreshBtn.addEventListener('click', function() {
+                refreshBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Actualisation...';
+                setTimeout(function() {
+                    refreshBtn.innerHTML = '<i class="fas fa-check"></i> Actualisé !';
+                    // Simuler une mise à jour des données
+                    const infoValue = document.querySelector('.info-value');
+                    if (infoValue) {
+                        infoValue.textContent = 'EuroMillions';
+                    }
+                    
+                    // Message de confirmation
+                    alert('Les données ont été actualisées avec succès !');
+                    
+                    // Remettre le bouton dans son état initial après 2 secondes
+                    setTimeout(function() {
+                        refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualiser maintenant';
+                    }, 2000);
+                }, 1500);
+            });
+
+            // Filtres simples
+            const filterBtn = document.getElementById('filterBtn');
+            filterBtn.addEventListener('click', function() {
+                const country = document.getElementById('countryFilter').value;
+                const lottery = document.getElementById('lotteryFilter').value;
+                const jackpot = document.getElementById('jackpotFilter').value;
+                
+                let message = 'Filtres appliqués: ';
+                if (country) message += `Pays: ${country}, `;
+                if (lottery) message += `Loterie: ${lottery}, `;
+                if (jackpot) message += `Jackpot min: ${jackpot}€`;
+                
+                if (!country && !lottery && !jackpot) {
+                    message = 'Tous les filtres ont été réinitialisés';
+                }
+                
+                filterBtn.innerHTML = '<i class="fas fa-check"></i> Appliqués !';
+                setTimeout(function() {
+                    filterBtn.innerHTML = '<i class="fas fa-check"></i> Appliquer les filtres';
+                }, 2000);
+                
+                // Ici on simule juste l'application des filtres avec un message
+                alert(message);
+            });
+        });
+    </script>
+</body>
+</html>
+

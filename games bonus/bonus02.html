@@ -1,0 +1,1021 @@
+@bonus02.html
+Résultats en temps réel (Bônus 2):
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LotoGains - Alerte Gagnante</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --vert: #00C853;
+            --vert-fonce: #009624;
+            --or: #FFD700;
+            --or-fonce: #FFC400;
+            --blanc: #FFFFFF;
+            --noir: #121212;
+            --gris-clair: #f8f9fa;
+            --gris-fonce: #6c757d;
+            --fond: #f8f9fa;
+            --texte: #121212;
+            --bordure: #dee2e6;
+            --success: #d4edda;
+            --warning: #fff3cd;
+        }
+
+        .dark-mode {
+            --blanc: #1a1a1a;
+            --noir: #f8f9fa;
+            --gris-clair: #2d2d2d;
+            --gris-fonce: #b1b1b1;
+            --fond: #2d2d2d;
+            --texte: #f8f9fa;
+            --bordure: #444;
+            --success: #2d4d2d;
+            --warning: #4d4a2d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--fond);
+            color: var(--texte);
+            line-height: 1.6;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header simplifié */
+        header {
+            background: linear-gradient(135deg, var(--vert), var(--vert-fonce));
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .dark-mode-toggle {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Navigation simplifiée */
+        .tabs {
+            display: flex;
+            background-color: var(--blanc);
+            border-bottom: 2px solid var(--vert);
+            margin: 1rem 0;
+        }
+
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-weight: bold;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            border-bottom: 3px solid var(--vert);
+            color: var(--vert);
+        }
+
+        /* Cartes simplifiées */
+        .card {
+            background-color: var(--blanc);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border: 1px solid var(--bordure);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--vert);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Alertes simplifiées */
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .alert-success {
+            background-color: var(--success);
+            border-left: 4px solid var(--vert);
+        }
+
+        .alert-warning {
+            background-color: var(--warning);
+            border-left: 4px solid var(--or);
+        }
+
+        /* Formulaires simplifiés */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--bordure);
+            border-radius: 8px;
+            background-color: var(--fond);
+            color: var(--texte);
+            font-size: 1rem;
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gris-fonce);
+        }
+
+        .input-icon input {
+            padding-left: 35px;
+        }
+
+        /* Boutons simplifiés */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--vert);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--vert-fonce);
+        }
+
+        .btn-secondary {
+            background-color: var(--gris-fonce);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--gris-clair);
+            color: var(--noir);
+        }
+
+        .btn-gold {
+            background-color: var(--or);
+            color: var(--noir);
+        }
+
+        .btn-gold:hover {
+            background-color: var(--or-fonce);
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        /* Tableaux simplifiés */
+        .table-responsive {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid var(--bordure);
+        }
+
+        th {
+            background-color: var(--gris-clair);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        th:hover {
+            background-color: var(--bordure);
+        }
+
+        tr:hover {
+            background-color: var(--gris-clair);
+        }
+
+        .winner {
+            background-color: rgba(0, 200, 83, 0.1);
+            font-weight: bold;
+        }
+
+        /* Instructions simplifiées */
+        .instructions {
+            background-color: var(--gris-clair);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .step {
+            display: flex;
+            margin-bottom: 1rem;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .step-number {
+            background-color: var(--vert);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-weight: bold;
+        }
+
+        /* Mise en page simplifiée */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .span-2 {
+                grid-column: span 2;
+            }
+        }
+
+        .flex {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Icônes et visuels */
+        .icon-large {
+            font-size: 2rem;
+            color: var(--vert);
+        }
+
+        .trophy {
+            color: var(--or);
+        }
+
+        /* Section cachée jusqu'à activation */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Mode démo simplifié */
+        .demo-banner {
+            background: linear-gradient(135deg, var(--or), var(--or-fonce));
+            color: var(--noir);
+            padding: 0.8rem;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        /* Pied de page simplifié */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--gris-fonce);
+            margin-top: 2rem;
+            border-top: 1px solid var(--bordure);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                border-bottom: 1px solid var(--bordure);
+            }
+            
+            .flex {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <button class="dark-mode-toggle" id="darkModeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+            <div class="logo">LotoGains</div>
+            <h1>Résultats en temps réel</h1>
+            <div class="subtitle">Alerte gagnant instantanée</div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Bannière d'alerte -->
+        <div class="alert alert-success" id="alertBanner" style="display: none;">
+            <i class="fas fa-trophy trophy"></i>
+            <div>
+                <strong id="alertTitle">Félicitations !</strong>
+                <span id="alertText">Vous avez un gain important !</span>
+            </div>
+            <button class="btn btn-sm" id="muteButton" style="margin-left: auto;">
+                <i class="fas fa-volume-up"></i>
+            </button>
+        </div>
+
+        <!-- Instructions simplifiées -->
+        <div class="instructions">
+            <h2>Comment utiliser LotoGains</h2>
+            <div class="step">
+                <div class="step-number">1</div>
+                <div>Ajoutez vos billets dans "Mes billets"</div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div>Les résultats se mettent à jour automatiquement</div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div>Recevez une alerte instantanée quand vous gagnez !</div>
+            </div>
+        </div>
+
+        <!-- Navigation par onglets -->
+        <div class="tabs">
+            <div class="tab active" data-tab="results">Résultats</div>
+            <div class="tab" data-tab="tickets">Mes billets</div>
+            <div class="tab" data-tab="settings">Paramètres</div>
+        </div>
+
+        <!-- Contenu des onglets -->
+        <div class="tab-content active" id="results-tab">
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-chart-line"></i> Derniers résultats</h2>
+                
+                <div class="demo-banner">
+                    <i class="fas fa-info-circle"></i> Mode démo activé - Données d'exemple
+                </div>
+                
+                <div class="flex">
+                    <div class="input-icon">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Rechercher...">
+                    </div>
+                    <button class="btn btn-primary" id="searchButton">
+                        <i class="fas fa-search"></i> Chercher
+                    </button>
+                </div>
+                
+                <div class="table-responsive">
+                    <table id="resultsTable">
+                        <thead>
+                            <tr>
+                                <th>Loterie</th>
+                                <th>Date du tirage</th>
+                                <th>Numéros</th>
+                                <th>Gains</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsBody">
+                            <!-- Les données seront insérées ici par JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div style="margin-top: 1rem; text-align: center;">
+                    <div>Dernière mise à jour : <span id="lastUpdateTimestamp">--/--/---- --:--</span></div>
+                    <div class="flex" style="justify-content: center; margin-top: 1rem;">
+                        <button class="btn btn-primary" id="refreshData">
+                            <i class="fas fa-sync"></i> Actualiser
+                        </button>
+                        <button class="btn btn-gold" id="demoMode">
+                            <i class="fas fa-magic"></i> Mode Démo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tickets-tab">
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-ticket-alt"></i> Mes billets</h2>
+                
+                <form id="ticketForm">
+                    <div class="grid">
+                        <div class="form-group">
+                            <label for="ticketLottery">Loterie</label>
+                            <select id="ticketLottery" required>
+                                <option value="">Choisissez une loterie</option>
+                                <option value="Loto">Loto</option>
+                                <option value="EuroMillions">EuroMillions</option>
+                                <option value="Kenzo">Kenzo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ticketNumbers">Numéros joués</label>
+                            <input type="text" id="ticketNumbers" placeholder="Ex: 01 12 23 34 45 + 07" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketNote">Note (optionnel)</label>
+                        <input type="text" id="ticketNote" placeholder="Note pour ce billet">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="fas fa-plus"></i> Ajouter ce billet
+                    </button>
+                </form>
+            </div>
+            
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-list"></i> Mes billets enregistrés</h2>
+                
+                <div class="flex">
+                    <button class="btn btn-secondary" id="importTickets">
+                        <i class="fas fa-file-import"></i> Importer
+                    </button>
+                    <button class="btn btn-secondary" id="exportTickets">
+                        <i class="fas fa-file-export"></i> Exporter
+                    </button>
+                    <button class="btn btn-secondary" id="deleteSelected">
+                        <i class="fas fa-trash"></i> Supprimer
+                    </button>
+                </div>
+                
+                <div class="table-responsive">
+                    <table id="ticketsTable">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAllTickets"></th>
+                                <th>Loterie</th>
+                                <th>Numéros</th>
+                                <th>Résultat</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ticketsBody">
+                            <!-- Les billets seront insérés ici par JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="settings-tab">
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-cog"></i> Paramètres</h2>
+                
+                <div class="form-group">
+                    <label for="dataUrl">URL des résultats (optionnel)</label>
+                    <input type="url" id="dataUrl" placeholder="https://exemple.com/resultats.json">
+                    <small>Laissez vide pour utiliser le mode démo</small>
+                </div>
+                
+                <div class="grid">
+                    <div class="form-group">
+                        <label for="updateInterval">Vérifier toutes les (minutes)</label>
+                        <input type="number" id="updateInterval" value="5" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="alertThreshold">Alerter à partir de</label>
+                        <select id="alertThreshold">
+                            <option value="2">2 numéros</option>
+                            <option value="3">3 numéros</option>
+                            <option value="4" selected>4 numéros</option>
+                            <option value="5">5 numéros</option>
+                            <option value="6">5+1 numéros</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="soundEnabled">
+                        <input type="checkbox" id="soundEnabled" checked> Activer les sons
+                    </label>
+                </div>
+                
+                <div class="flex">
+                    <button class="btn btn-primary" id="saveSettings">
+                        <i class="fas fa-save"></i> Enregistrer
+                    </button>
+                    <button class="btn btn-secondary" id="resetSettings">
+                        <i class="fas fa-undo"></i> Réinitialiser
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-shield-alt"></i> Informations importantes</h2>
+                <p>Les résultats affichés sont fournis à titre informatif. Vérifiez toujours les résultats officiels sur les sites des loteries concernées avant de procéder à toute réclamation.</p>
+                <p>LotoGains ne garantit pas l'exactitude des résultats affichés et décline toute responsabilité en cas d'erreur.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>LotoGains &copy; 2023 - Ne manquez plus jamais vos gains !</p>
+        </div>
+    </footer>
+
+    <script>
+        // Données d'exemple pour le mode démo
+        const demoData = [
+            {
+                loterie: "Loto",
+                date: new Date().toISOString(),
+                numeros: "12 24 36 42 48 + 07",
+                jackpot: 4500000,
+                lien: "https://www.fdj.fr/jeux/resultats/loto",
+                statut: "Résultats officiels"
+            },
+            {
+                loterie: "EuroMillions",
+                date: new Date(Date.now() - 86400000).toISOString(),
+                numeros: "05 13 22 34 47 + 03 08",
+                jackpot: 72000000,
+                lien: "https://www.fdj.fr/jeux/resultats/euromillions",
+                statut: "Résultats officiels"
+            },
+            {
+                loterie: "Kenzo",
+                date: new Date(Date.now() - 172800000).toISOString(),
+                numeros: "03 11 19 27 35 + 02",
+                jackpot: 1200000,
+                lien: "https://www.fdj.fr/jeux/resultats/keno",
+                statut: "Résultats officiels"
+            }
+        ];
+
+        // Variables globales
+        let resultsData = [];
+        let tickets = [];
+        let soundEnabled = true;
+
+        // Éléments DOM
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const alertBanner = document.getElementById('alertBanner');
+        const alertTitle = document.getElementById('alertTitle');
+        const alertText = document.getElementById('alertText');
+        const muteButton = document.getElementById('muteButton');
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const resultsBody = document.getElementById('resultsBody');
+        const lastUpdateTimestamp = document.getElementById('lastUpdateTimestamp');
+        const refreshDataBtn = document.getElementById('refreshData');
+        const demoModeBtn = document.getElementById('demoMode');
+        const ticketForm = document.getElementById('ticketForm');
+        const ticketLottery = document.getElementById('ticketLottery');
+        const ticketNumbers = document.getElementById('ticketNumbers');
+        const ticketNote = document.getElementById('ticketNote');
+        const ticketsBody = document.getElementById('ticketsBody');
+        const importTicketsBtn = document.getElementById('importTickets');
+        const exportTicketsBtn = document.getElementById('exportTickets');
+        const deleteSelectedBtn = document.getElementById('deleteSelected');
+        const selectAllTickets = document.getElementById('selectAllTickets');
+        const dataUrl = document.getElementById('dataUrl');
+        const updateInterval = document.getElementById('updateInterval');
+        const alertThreshold = document.getElementById('alertThreshold');
+        const soundEnabledCheckbox = document.getElementById('soundEnabled');
+        const saveSettingsBtn = document.getElementById('saveSettings');
+        const resetSettingsBtn = document.getElementById('resetSettings');
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', init);
+
+        function init() {
+            loadSettings();
+            loadTickets();
+            setupEventListeners();
+            activateDemoMode();
+            updateLastUpdateTimestamp();
+        }
+
+        function setupEventListeners() {
+            // Mode sombre
+            darkModeToggle.addEventListener('click', toggleDarkMode);
+            
+            // Navigation par onglets
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    switchTab(tabId);
+                });
+            });
+            
+            // Résultats
+            refreshDataBtn.addEventListener('click', fetchData);
+            demoModeBtn.addEventListener('click', activateDemoMode);
+            
+            // Billets
+            ticketForm.addEventListener('submit', addTicket);
+            importTicketsBtn.addEventListener('click', importTickets);
+            exportTicketsBtn.addEventListener('click', exportTickets);
+            deleteSelectedBtn.addEventListener('click', deleteSelectedTickets);
+            selectAllTickets.addEventListener('click', toggleSelectAllTickets);
+            
+            // Paramètres
+            saveSettingsBtn.addEventListener('click', saveSettings);
+            resetSettingsBtn.addEventListener('click', resetSettings);
+            
+            // Notification
+            muteButton.addEventListener('click', toggleMute);
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            
+            // Changer l'icône
+            const icon = darkModeToggle.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+
+        function switchTab(tabId) {
+            // Désactiver tous les onglets
+            tabs.forEach(tab => tab.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Activer l'onglet sélectionné
+            document.querySelector(`.tab[data-tab="${tabId}"]`).classList.add('active');
+            document.getElementById(`${tabId}-tab`).classList.add('active');
+        }
+
+        function activateDemoMode() {
+            resultsData = [...demoData];
+            renderResults();
+            checkTicketsForWins();
+            
+            // Sauvegarder l'heure de mise à jour
+            const now = new Date().toISOString();
+            localStorage.setItem('lastUpdate', now);
+            updateLastUpdateTimestamp();
+            
+            // Afficher un message de confirmation
+            alertBanner.style.display = 'flex';
+            alertTitle.textContent = 'Mode démo activé';
+            alertText.textContent = 'Vous utilisez maintenant des données de démonstration';
+            
+            setTimeout(() => {
+                alertBanner.style.display = 'none';
+            }, 3000);
+        }
+
+        function renderResults() {
+            resultsBody.innerHTML = '';
+            
+            if (resultsData.length === 0) {
+                resultsBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Aucun résultat disponible</td></tr>';
+                return;
+            }
+            
+            resultsData.forEach(result => {
+                const row = document.createElement('tr');
+                
+                // Formater la date
+                const date = new Date(result.date);
+                const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}h${date.getMinutes().toString().padStart(2, '0')}`;
+                
+                // Formater le jackpot
+                const formattedJackpot = new Intl.NumberFormat('fr-FR').format(result.jackpot) + ' €';
+                
+                row.innerHTML = `
+                    <td>${result.loterie}</td>
+                    <td>${formattedDate}</td>
+                    <td>${result.numeros}</td>
+                    <td>${formattedJackpot}</td>
+                    <td>${result.statut}</td>
+                `;
+                
+                resultsBody.appendChild(row);
+            });
+        }
+
+        function updateLastUpdateTimestamp() {
+            const timestamp = localStorage.getItem('lastUpdate') || new Date().toISOString();
+            const date = new Date(timestamp);
+            lastUpdateTimestamp.textContent = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}h${date.getMinutes().toString().padStart(2, '0')}`;
+        }
+
+        function addTicket(e) {
+            e.preventDefault();
+            
+            const lottery = ticketLottery.value;
+            const numbers = ticketNumbers.value;
+            const note = ticketNote.value;
+            
+            // Valider le format des numéros
+            if (!isValidNumbersFormat(numbers)) {
+                alert('Format de numéros invalide. Utilisez le format: "01 12 23 34 45 + 07"');
+                return;
+            }
+            
+            const newTicket = {
+                lottery,
+                numbers,
+                note,
+                matchLevel: 'none',
+                matchText: 'Non vérifié'
+            };
+            
+            tickets.push(newTicket);
+            saveTickets();
+            renderTickets();
+            checkTicketsForWins();
+            
+            // Réinitialiser le formulaire
+            ticketForm.reset();
+            
+            // Afficher un message de confirmation
+            alertBanner.style.display = 'flex';
+            alertTitle.textContent = 'Billet ajouté !';
+            alertText.textContent = 'Votre billet a été enregistré avec succès';
+            
+            setTimeout(() => {
+                alertBanner.style.display = 'none';
+            }, 3000);
+        }
+
+        function isValidNumbersFormat(numbers) {
+            // Valider le format standard: 5 numéros + 1 numéro chance
+            const regex = /^(\d{2}\s){4}\d{2}\s\+\s\d{2}$/;
+            return regex.test(numbers);
+        }
+
+        function saveTickets() {
+            localStorage.setItem('tickets', JSON.stringify(tickets));
+        }
+
+        function renderTickets() {
+            ticketsBody.innerHTML = '';
+            
+            if (tickets.length === 0) {
+                ticketsBody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Aucun billet enregistré</td></tr>';
+                return;
+            }
+            
+            tickets.forEach((ticket, index) => {
+                const row = document.createElement('tr');
+                if (ticket.matchLevel === 'high') row.classList.add('winner');
+                
+                row.innerHTML = `
+                    <td><input type="checkbox" class="ticket-checkbox" data-index="${index}"></td>
+                    <td>${ticket.lottery}</td>
+                    <td>${ticket.numbers}</td>
+                    <td>${ticket.matchText}</td>
+                `;
+                
+                ticketsBody.appendChild(row);
+            });
+        }
+
+        function checkTicketsForWins() {
+            // Cette fonction vérifierait les correspondances entre les billets et les résultats
+            // Pour la démo, nous allons simplement marquer certains billets comme gagnants au hasard
+            
+            tickets.forEach(ticket => {
+                // Simulation: 1 chance sur 5 d'avoir un gain
+                if (Math.random() < 0.2) {
+                    const matchLevels = ['2 numéros', '3 numéros', '4 numéros', '5 numéros'];
+                    const randomMatch = matchLevels[Math.floor(Math.random() * matchLevels.length)];
+                    
+                    ticket.matchText = randomMatch;
+                    ticket.matchLevel = randomMatch.includes('4') || randomMatch.includes('5') ? 'high' : 'medium';
+                    
+                    // Afficher une alerte pour les gains importants
+                    if (ticket.matchLevel === 'high') {
+                        alertBanner.style.display = 'flex';
+                        alertTitle.textContent = 'Félicitations !';
+                        alertText.textContent = `Vous avez ${randomMatch} sur le ${ticket.lottery}`;
+                        
+                        // Jouer un son si activé
+                        if (soundEnabled) {
+                            playNotificationSound();
+                        }
+                    }
+                } else {
+                    ticket.matchText = 'Aucun gain';
+                    ticket.matchLevel = 'none';
+                }
+            });
+            
+            saveTickets();
+            renderTickets();
+        }
+
+        function playNotificationSound() {
+            // Créer un son simple sans API audio complexe
+            const context = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = context.createOscillator();
+            const gainNode = context.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(context.destination);
+            
+            oscillator.type = 'sine';
+            oscillator.frequency.value = 880;
+            gainNode.gain.value = 0.1;
+            
+            oscillator.start();
+            
+            setTimeout(() => {
+                oscillator.stop();
+            }, 300);
+        }
+
+        function toggleMute() {
+            soundEnabled = !soundEnabled;
+            localStorage.setItem('soundEnabled', soundEnabled);
+            
+            const icon = muteButton.querySelector('i');
+            if (soundEnabled) {
+                icon.classList.remove('fa-volume-mute');
+                icon.classList.add('fa-volume-up');
+            } else {
+                icon.classList.remove('fa-volume-up');
+                icon.classList.add('fa-volume-mute');
+            }
+        }
+
+        function loadSettings() {
+            // Charger les préférences
+            const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (savedDarkMode) document.body.classList.add('dark-mode');
+            
+            const savedSound = localStorage.getItem('soundEnabled');
+            if (savedSound !== null) {
+                soundEnabled = savedSound === 'true';
+                soundEnabledCheckbox.checked = soundEnabled;
+            }
+        }
+
+        function saveSettings() {
+            localStorage.setItem('soundEnabled', soundEnabledCheckbox.checked);
+            soundEnabled = soundEnabledCheckbox.checked;
+            
+            alert('Paramètres enregistrés avec succès!');
+        }
+
+        function resetSettings() {
+            if (confirm('Êtes-vous sûr de vouloir réinitialiser tous les paramètres?')) {
+                localStorage.clear();
+                loadSettings();
+                alert('Tous les paramètres ont été réinitialisés.');
+            }
+        }
+
+        function loadTickets() {
+            const savedTickets = localStorage.getItem('tickets');
+            if (savedTickets) {
+                tickets = JSON.parse(savedTickets);
+                renderTickets();
+            }
+        }
+
+        function importTickets() {
+            alert('Fonctionnalité d\'importation à implémenter');
+        }
+
+        function exportTickets() {
+            alert('Fonctionnalité d\'exportation à implémenter');
+        }
+
+        function toggleSelectAllTickets() {
+            const checkboxes = document.querySelectorAll('.ticket-checkbox');
+            const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = !allChecked;
+            });
+        }
+
+        function deleteSelectedTickets() {
+            const selectedIndexes = Array.from(document.querySelectorAll('.ticket-checkbox:checked'))
+                .map(checkbox => parseInt(checkbox.getAttribute('data-index')))
+                .sort((a, b) => b - a);
+            
+            if (selectedIndexes.length === 0) {
+                alert('Veuillez sélectionner au moins un billet à supprimer');
+                return;
+            }
+            
+            if (confirm(`Êtes-vous sûr de vouloir supprimer ${selectedIndexes.length} billet(s)?`)) {
+                selectedIndexes.forEach(index => {
+                    tickets.splice(index, 1);
+                });
+                
+                saveTickets();
+                renderTickets();
+                
+                alert(`${selectedIndexes.length} billet(s) supprimé(s) avec succès`);
+            }
+        }
+
+        function fetchData() {
+            alert('Fonctionnalité de récupération des données à implémenter');
+        }
+    </script>
+</body>
+</html>
+
+
+
