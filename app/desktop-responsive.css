@@ -1,0 +1,96 @@
+/* Desktop Responsive Improvements */
+@media (min-width: 1024px) {
+  /* Hide bottom navigation on desktop */
+  .bottom-nav-mobile {
+    display: none;
+  }
+  
+  /* Adjust main content padding for desktop */
+  .desktop-main {
+    padding-bottom: 2rem !important; /* Remove mobile bottom nav padding */
+  }
+  
+  /* Desktop grid improvements */
+  .desktop-grid-hero {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 2rem;
+  }
+  
+  .desktop-grid-products {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  
+  .desktop-grid-bonus {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  
+  /* Card sizing for desktop */
+  .desktop-card-image {
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .desktop-card-bonus-image {
+    height: 120px;
+    object-fit: cover;
+  }
+}
+
+@media (min-width: 1280px) {
+  /* Extra large desktop improvements */
+  .desktop-container {
+    max-width: 1200px;
+  }
+  
+  .desktop-grid-bonus {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .desktop-hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}
+
+/* Utility classes for desktop layout */
+.container-responsive {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .container-responsive {
+    max-width: 1200px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-responsive {
+    max-width: 1280px;
+  }
+}
+
+/* Hide mobile-only elements on desktop */
+@media (min-width: 1024px) {
+  .mobile-only {
+    display: none !important;
+  }
+  
+  .desktop-only {
+    display: block !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .desktop-only {
+    display: none !important;
+  }
+}

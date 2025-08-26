@@ -62,7 +62,7 @@ const Header = React.forwardRef<HTMLElement, HeaderProps>(
         )}
         {...props}
       >
-        <div className="flex items-center justify-between p-4">
+        <div className="max-w-6xl mx-auto flex items-center justify-between p-4">
           <div className="flex items-center">
             {shouldShowBackButton && (
               <Button 

@@ -66,7 +66,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b">
-        <div className="flex items-center justify-between p-4">
+        <div className="max-w-6xl mx-auto flex items-center justify-between p-4">
           <div>
             <h1 className="text-2xl font-bold text-primary">Accès</h1>
             <p className="text-sm text-muted-foreground">Saisissez votre email pour vous connecter</p>
@@ -74,7 +74,7 @@ export default function LoginPage() {
         </div>
       </header>
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="max-w-6xl mx-auto px-4 py-8">
         <div className="max-w-md mx-auto">
           <Card>
             <CardHeader>

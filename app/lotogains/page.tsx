@@ -287,7 +287,7 @@ export default function LotoGainsPage() {
 
           {/* Header */}
           <header className="sticky top-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
-            <div className="flex items-center justify-between p-4">
+            <div className="max-w-6xl mx-auto flex items-center justify-between p-4">
               <div className="flex items-center gap-2">
                 <SidebarTrigger />
                 <Button variant="ghost" size="sm" onClick={() => router.back()} className="flex items-center gap-2">
@@ -311,7 +311,7 @@ export default function LotoGainsPage() {
           </header>
 
           {/* Main Content */}
-          <main className="container mx-auto p-4 max-w-md">
+          <main className="container mx-auto p-4 max-w-6xl">
             <ProgressSteps step={step} />
 
             <TurboMode

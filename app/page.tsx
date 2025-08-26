@@ -3,9 +3,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Header } from "@/components/ui/header"
-import { BottomNavigation } from "@/components/ui/bottom-navigation"
 import { AuthModal } from "@/components/ui/auth-modal"
+import { PageLayout } from "@/components/layout/page-layout"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/hooks/use-auth"
 import { Lock } from "lucide-react"
@@ -66,16 +65,15 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <Header showBackButton={false} />
-
-
-      {/* Main Content */}
-      <main className="pb-20 px-4">
-        {/* Featured Product */}
+    <PageLayout 
+      title="LotoGains"
+      subtitle="Votre chance commence ici"
+      showBackButton={false}
+      containerClass="max-w-6xl mx-auto px-4"
+    >
+        {/* Hero Section - Featured Product */}
         <section className="py-6">
-          <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
+          <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20 max-w-4xl mx-auto">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <Badge variant="secondary" className="bg-primary text-primary-foreground">
@@ -87,63 +85,67 @@ export default function HomePage() {
               <CardDescription>Le plus gros prix de l'histoire vous attend</CardDescription>
             </CardHeader>
             <CardContent>
-              <img
-                src="https://ynmtotqvrymcrizsofdx.supabase.co/storage/v1/object/public/imagens/products/lotogains.png"
-                alt="LotoGains"
-                className="w-full h-full object-cover rounded-lg mb-4"
-              />
-              <Button 
-                className="w-full" 
-                size="lg"
-                onClick={() => router.push("/lotogains")}
-              >
-                Jouer Maintenant
-              </Button>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+                <img
+                  src="https://ynmtotqvrymcrizsofdx.supabase.co/storage/v1/object/public/imagens/products/lotogains.png"
+                  alt="LotoGains"
+                  className="w-full h-64 object-cover rounded-lg"
+                />
+                <div className="flex flex-col justify-center space-y-4">
+                  <p className="text-muted-foreground">
+                    Le générateur de numéros le plus avancé pour maximiser vos chances de gagner.
+                  </p>
+                  <Button 
+                    className="w-full" 
+                    size="lg"
+                    onClick={() => router.push("/lotogains")}
+                  >
+                    Jouer Maintenant
+                  </Button>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </section>
 
-        {/* LotoGains 10X Premium Card */}
+        {/* Premium Products Grid */}
         <section className="py-6">
-          <Card className="bg-gradient-to-r from-accent/20 to-primary/20 border-accent/30 mb-6 hover:shadow-xl transition-all duration-300">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
-                  🚀 LotoGains 10X
-                </CardTitle>
-                <Badge className="bg-accent text-accent-foreground animate-pulse">
-                  NOUVEAU
-                </Badge>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <img
-                src="https://ynmtotqvrymcrizsofdx.supabase.co/storage/v1/object/public/imagens/products/10x.png"
-                alt="LotoGains 10X"
-                className="w-full h-full object-cover rounded-md mb-4"
-              />
-              <CardDescription className="mb-4 text-base">
-                ⚡ Générateur de numéros alimenté par une IA ultra-puissante. 
-                Mode Turbo disponible pour 10X plus de précision et 78% de chances de gagner en plus !
-              </CardDescription>
-              {!isAuthenticated ? (
-                <AuthModal>
-                  <Button className="w-full bg-gradient-to-r from-accent to-primary text-white hover:from-accent/90 hover:to-primary/90 transition-all duration-300">
-                    🎯 Essayer Maintenant
-                  </Button>
-                </AuthModal>
-              ) : (
-                <div className="relative">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            {/* LotoGains 10X Premium Card */}
+            <Card className="bg-gradient-to-r from-accent/20 to-primary/20 border-accent/30 hover:shadow-xl transition-all duration-300">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
+                    🚀 LotoGains 10X
+                  </CardTitle>
+                  <Badge className="bg-accent text-accent-foreground animate-pulse">
+                    NOUVEAU
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <img
+                  src="https://ynmtotqvrymcrizsofdx.supabase.co/storage/v1/object/public/imagens/products/10x.png"
+                  alt="LotoGains 10X"
+                  className="w-full h-40 object-cover rounded-md mb-4"
+                />
+                <CardDescription className="mb-4">
+                  ⚡ Générateur IA ultra-puissante. Mode Turbo pour 10X plus de précision !
+                </CardDescription>
+                {!isAuthenticated ? (
+                  <AuthModal>
+                    <Button className="w-full bg-gradient-to-r from-accent to-primary text-white hover:from-accent/90 hover:to-primary/90 transition-all duration-300">
+                      🎯 Essayer
+                    </Button>
+                  </AuthModal>
+                ) : (
                   <Button 
                     className={`w-full bg-gradient-to-r transition-all duration-300 ${
                       user?.loto_gains_10x_access 
                         ? 'from-accent to-primary text-white hover:from-accent/90 hover:to-primary/90' 
                         : 'from-gray-400 to-gray-500 text-gray-200 cursor-pointer hover:from-gray-500 hover:to-gray-600'
                     }`}
-                    onClick={(e) => {
-                      console.log('🛒 Botão LotoGains 10X clicado!')
-                      console.log('👤 Usuário:', user?.email)
-                      console.log('🔐 Acesso LotoGains:', user?.loto_gains_10x_access)
+                    onClick={() => {
                       handlePremiumAccess("/lotogains-10x", user?.loto_gains_10x_access || false, 'lotogains')
                     }}
                   >
@@ -156,53 +158,45 @@ export default function HomePage() {
                       </>
                     )}
                   </Button>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </section>
+                )}
+              </CardContent>
+            </Card>
 
-        {/* LotoTurbo Premium Card */}
-        <section className="py-6">
-          <Card className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 border-green-500/30 mb-6 hover:shadow-xl transition-all duration-300">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent">
-                  ⚡ LotoTurbo
-                </CardTitle>
-                <Badge className="bg-green-500 text-white animate-pulse">
-                  RAPIDE
-                </Badge>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <img
-                src="https://ynmtotqvrymcrizsofdx.supabase.co/storage/v1/object/public/imagens/products/lototurbo.png"
-                alt="LotoTurbo"
-                className="w-full h-full object-cover rounded-md mb-4"
-              />
-              <CardDescription className="mb-4 text-base">
-                🚀 Résultats ultra-rapides toutes les 5 minutes ! 
-                Système de génération instantanée avec technologie avancée pour une agilité maximale !
-              </CardDescription>
-              {!isAuthenticated ? (
-                <AuthModal>
-                  <Button className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600 transition-all duration-300">
-                    ⚡ Jouer Turbo
-                  </Button>
-                </AuthModal>
-              ) : (
-                <div className="relative">
+            {/* LotoTurbo Premium Card */}
+            <Card className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 border-green-500/30 hover:shadow-xl transition-all duration-300">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-xl font-bold bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent">
+                    ⚡ LotoTurbo
+                  </CardTitle>
+                  <Badge className="bg-green-500 text-white animate-pulse">
+                    RAPIDE
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <img
+                  src="https://ynmtotqvrymcrizsofdx.supabase.co/storage/v1/object/public/imagens/products/lototurbo.png"
+                  alt="LotoTurbo"
+                  className="w-full h-40 object-cover rounded-md mb-4"
+                />
+                <CardDescription className="mb-4">
+                  🚀 Résultats ultra-rapides toutes les 5 minutes ! Technologie avancée.
+                </CardDescription>
+                {!isAuthenticated ? (
+                  <AuthModal>
+                    <Button className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600 transition-all duration-300">
+                      ⚡ Jouer Turbo
+                    </Button>
+                  </AuthModal>
+                ) : (
                   <Button 
                     className={`w-full bg-gradient-to-r transition-all duration-300 ${
                       user?.loto_turbo_access 
                         ? 'from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600' 
                         : 'from-gray-400 to-gray-500 text-gray-200 cursor-pointer hover:from-gray-500 hover:to-gray-600'
                     }`}
-                    onClick={(e) => {
-                      console.log('🛒 Botão LotoTurbo clicado!')
-                      console.log('👤 Usuário:', user?.email)
-                      console.log('🔐 Acesso LotoTurbo:', user?.loto_turbo_access)
+                    onClick={() => {
                       handlePremiumAccess("/loto-turbo", user?.loto_turbo_access || false, 'lototurbo')
                     }}
                   >
@@ -215,114 +209,107 @@ export default function HomePage() {
                       </>
                     )}
                   </Button>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* Bonus Features Grid */}
+        <section className="py-6">
+          <h2 className="text-2xl font-bold text-center mb-6">Fonctionnalités Bonus</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {/* Bonus01 - Jackpots Instantâneos */}
+            <Card className="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border-yellow-500/30 hover:shadow-xl transition-all duration-300">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg font-bold bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent">
+                    🎰 Jackpots
+                  </CardTitle>
+                  <Badge className="bg-yellow-500 text-white animate-pulse text-xs">
+                    CHAUD
+                  </Badge>
                 </div>
-              )}
-            </CardContent>
-          </Card>
-        </section>
+              </CardHeader>
+              <CardContent>
+                <img
+                  src="https://ynmtotqvrymcrizsofdx.supabase.co/storage/v1/object/public/imagens/products/jackpots.png"
+                  alt="Jackpots Instantanés"
+                  className="w-full h-32 object-cover rounded-md mb-3"
+                />
+                <CardDescription className="mb-4 text-sm">
+                  💰 Accès direct aux plus gros jackpots du monde !
+                </CardDescription>
+                <Button 
+                  className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white hover:from-yellow-600 hover:to-orange-600 transition-all duration-300 text-sm"
+                  onClick={() => router.push("/bonus01")}
+                >
+                  🎯 Voir Jackpots
+                </Button>
+              </CardContent>
+            </Card>
 
-        {/* Bonus01 - Jackpots Instantâneos */}
-        <section className="py-6">
-          <Card className="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border-yellow-500/30 mb-6 hover:shadow-xl transition-all duration-300">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent">
-                  🎰 Jackpots Instantanés
-                </CardTitle>
-                <Badge className="bg-yellow-500 text-white animate-pulse">
-                  CHAUD
-                </Badge>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <img
-                src="https://ynmtotqvrymcrizsofdx.supabase.co/storage/v1/object/public/imagens/products/jackpots.png"
-                alt="Jackpots Instantanés"
-                className="w-full h-full object-cover rounded-md mb-4"
-              />
-              <CardDescription className="mb-4 text-base">
-                💰 Accès direct aux plus gros jackpots du monde ! 
-                EuroMillions, Powerball et plus - tout en un seul endroit avec des informations mises à jour !
-              </CardDescription>
-              <Button 
-                className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white hover:from-yellow-600 hover:to-orange-600 transition-all duration-300"
-                onClick={() => router.push("/bonus01")}
-              >
-                🎯 Voir les Jackpots
-              </Button>
-            </CardContent>
-          </Card>
-        </section>
+            {/* Bonus02 - Alerta Ganhante */}
+            <Card className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 border-blue-500/30 hover:shadow-xl transition-all duration-300">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+                    🔔 Alertes
+                  </CardTitle>
+                  <Badge className="bg-blue-500 text-white animate-pulse text-xs">
+                    TEMPS RÉEL
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <img
+                  src="https://ynmtotqvrymcrizsofdx.supabase.co/storage/v1/object/public/imagens/products/alerte.png"
+                  alt="Alerte Gagnante"
+                  className="w-full h-32 object-cover rounded-md mb-3"
+                />
+                <CardDescription className="mb-4 text-sm">
+                  📱 Système d'alertes intelligent pour vos billets !
+                </CardDescription>
+                <Button 
+                  className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 transition-all duration-300 text-sm"
+                  onClick={() => router.push("/bonus02")}
+                >
+                  🚨 Alertes
+                </Button>
+              </CardContent>
+            </Card>
 
-        {/* Bonus02 - Alerta Ganhante */}
-        <section className="py-6">
-          <Card className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 border-blue-500/30 mb-6 hover:shadow-xl transition-all duration-300">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-                  🔔 Alerte Gagnante
-                </CardTitle>
-                <Badge className="bg-blue-500 text-white animate-pulse">
-                  TEMPS RÉEL
-                </Badge>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <img
-                src="https://ynmtotqvrymcrizsofdx.supabase.co/storage/v1/object/public/imagens/products/alerte.png"
-                alt="Alerte Gagnante"
-                className="w-full h-full object-cover rounded-md mb-4"
-              />
-              <CardDescription className="mb-4 text-base">
-                📱 Système d'alertes intelligent ! 
-                Enregistrez vos billets et recevez des notifications instantanées quand vous gagnez !
-              </CardDescription>
-              <Button 
-                className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 transition-all duration-300"
-                onClick={() => router.push("/bonus02")}
-              >
-                🚨 Activer les Alertes
-              </Button>
-            </CardContent>
-          </Card>
+            {/* Bonus03 - Atualizações Diárias */}
+            <Card className="bg-gradient-to-r from-indigo-500/20 to-cyan-500/20 border-indigo-500/30 hover:shadow-xl transition-all duration-300 md:col-span-2 xl:col-span-1">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg font-bold bg-gradient-to-r from-indigo-500 to-cyan-500 bg-clip-text text-transparent">
+                    📊 Dashboard
+                  </CardTitle>
+                  <Badge className="bg-indigo-500 text-white animate-pulse text-xs">
+                    QUOTIDIEN
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <img
+                  src="https://ynmtotqvrymcrizsofdx.supabase.co/storage/v1/object/public/imagens/products/mises%20a.png"
+                  alt="Mises à Jour Quotidiennes"
+                  className="w-full h-32 object-cover rounded-md mb-3"
+                />
+                <CardDescription className="mb-4 text-sm">
+                  📈 Tableau de bord avec toutes les informations mises à jour !
+                </CardDescription>
+                <Button 
+                  className="w-full bg-gradient-to-r from-indigo-500 to-cyan-500 text-white hover:from-indigo-600 hover:to-cyan-600 transition-all duration-300 text-sm"
+                  onClick={() => router.push("/bonus03")}
+                >
+                  📊 Dashboard
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         </section>
-
-        {/* Bonus03 - Atualizações Diárias */}
-        <section className="py-6">
-          <Card className="bg-gradient-to-r from-indigo-500/20 to-cyan-500/20 border-indigo-500/30 mb-6 hover:shadow-xl transition-all duration-300">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-cyan-500 bg-clip-text text-transparent">
-                  📊 Mises à Jour Quotidiennes
-                </CardTitle>
-                <Badge className="bg-indigo-500 text-white animate-pulse">
-                  QUOTIDIEN
-                </Badge>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <img
-                src="https://ynmtotqvrymcrizsofdx.supabase.co/storage/v1/object/public/imagens/products/mises%20a.png"
-                alt="Mises à Jour Quotidiennes"
-                className="w-full h-full object-cover rounded-md mb-4"
-              />
-              <CardDescription className="mb-4 text-base">
-                📈 Tableau de bord complet avec toutes les informations ! 
-                Prochains tirages, classements des jackpots et actualités mises à jour quotidiennement !
-              </CardDescription>
-              <Button 
-                className="w-full bg-gradient-to-r from-indigo-500 to-cyan-500 text-white hover:from-indigo-600 hover:to-cyan-600 transition-all duration-300"
-                onClick={() => router.push("/bonus03")}
-              >
-                📊 Voir le Tableau de Bord
-              </Button>
-            </CardContent>
-          </Card>
-        </section>
-      </main>
-
-      {/* Bottom Navigation */}
-      <BottomNavigation />
-    </div>
+    </PageLayout>
   )
 }
